@@ -1,0 +1,134 @@
+{ "title" : "Solicitação de Crédito",
+  "lovs" : [ {
+  "id": "filter",
+  "formid": "crud_form",
+  "action": "test",
+  "readonly": "no",
+  "keypairs"
+  : [ ["null", ""],
+        ["=","igual"],
+        ["contains","contém"],
+        ["startwith","inicia com"],
+        ["finishwith","termina com"],
+        ["between","entre"]
+      ]
+  },
+  {
+    "id": "filter2",
+    "keypairs"
+    : [ ["=", "igual"],
+        [">", "maior que"],
+        ["<", "menor que"],
+        ["between", "entre"]
+      ]
+  }
+
+],
+
+  "values":
+[
+  { "label": "Cliente",
+    "id": "cliente",
+    "length": "15",
+    "mask": "\\d"
+  },
+  { "label": "Tipo de Solicitação",
+    "id": "tiposol",
+    "length": "11",
+    "mask": "\\d",
+    "filter": {
+      "default":"finishwith",
+      "lov": {
+        "ref": "filter",
+        "includes":"*"
+      }
+    }
+  },
+  { "label": "Segmento Financeiro",
+    "id": "segfin",
+    "length": "15",
+    "mask": "\\d",
+    "title": "Entre dígito verificador, um numeral!",
+    "filter": null
+  },
+  { "label": "Segmento Financeiro Solicitante",
+    "id":"segfinsol",
+    "length": "4",
+    "mask": "\\w",
+    "filter": {
+      "default":"contains",
+      "lov": {
+        "ref": "filter",
+        "includes":"*"
+      }
+    }
+  },
+  { "label": "Pontuação Merc/Prinad Média %",
+    "id":"pontmercprinadmedia",
+    "mask": "\\w"
+  },
+  { "label": "Tipo Cliente Financeiro",
+    "id":"tipoclifin",
+    "mask": "\\w"
+  },
+  { "label": "Ind. Garantia",
+    "id":"indgarantia",
+    "mask": "\\w"
+  },
+  { "label": "Grupo Crédito",
+    "id":"grpcredito",
+    "mask": "\\w"
+  },
+  { "label": "Data Recebimento Documento",
+    "id":"dtrecdoc",
+    "mask": "\\w",
+    "type": "date"
+  },
+  { "label": "CNPJ / Conta Crédito",
+    "id":"cnpj",
+    "mask": "\\w"
+  },
+  { "label": "Origem Comercial",
+    "id":"oricomercial",
+    "mask": "\\w"
+  },
+  { "label": "Estado",
+    "id":"estado",
+    "mask": "\\w"
+  },
+  { "label": "Faixa de Risco Mercado",
+    "id":"faixariscomerc",
+    "mask": "\\w"
+  },
+  { "label": "Faixa de Risco BR",
+    "id":"faixariscobr",
+    "mask": "\\w"
+  },
+  { "label": "Resp.última ação",
+    "id":"respultacao",
+    "mask": "\\w"
+  },
+  { "label": "Data Última Ação",
+    "id":"dataultacao",
+    "mask": "\\w",
+    "type": "date"
+  },
+  { "label": "Alçada Responsável Atual",
+    "id":"alcadarespatual",
+    "mask": "\\w"
+  },
+  { "label": "Responsável Comercial",
+    "id":"respcomercial",
+    "mask": "\\w"
+  },
+  { "label": "Zona de Vendas",
+    "id":"zonavendas",
+    "mask": "\\w"
+  },
+  { "label": "Responsável Financeiro",
+    "id":"respfin",
+    "mask": "\\w"
+  }
+
+]
+}

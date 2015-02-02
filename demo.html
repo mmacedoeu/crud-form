@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>crud-form Demo</title>
+
+  <script src="../webcomponentsjs/webcomponents.js"></script>
+
+  <link rel="import" href="crud-form.html">
+  <link rel="import" href="../core-media-query/core-media-query.html">
+  <link rel="import" href="../core-ajax/core-ajax.html">
+
+    <!--This is only used for mocking the HTTP requests since this demo does not have a server to handle requests.-->
+    <script src="demo_resources/sinon-server-1.10.2.js"></script>
+
+</head>
+
+<body unresolved>
+  <polymer-element name="match-example" properties="debug">
+    <template>
+      <core-media-query query="{{query}}" queryMatches="{{wide}}"></core-media-query>
+      <core-ajax auto handleAs="json" url="demo.json" response="{{crud_form}}" progress="{{progress}}"
+          loading="{{loading}}"
+      ></core-ajax>
+
+      <template if="{{debug}}">
+      <div>
+        <template if="{{loading}}">
+          Loading...
+        </template>
+        <template if="{{!loading}}">
+          Loaded!
+        </template>
+      </div>
+      </template>
+
+  <crud-form id="element" formid="crud_id" fields={{crud_form}} wide="{{wide}}" debug={{debug}}>
+    <template if="{{debug}}">
+    <span>And this is my client-provided content with {{wide}}</span>
+    </template>
+  </crud-form>
+
+    </template>
+    <script>
+      Polymer('match-example', {
+        query: 'min-width: 900px'
+      });
+    </script>
+  </polymer-element>
+
+  <p>An example of crud-form looks like this:</p>
+  <match-example id="me" debug=false></match-example>
+
+</body>
+
+    <script>
+        // This code is only used to mock/intercept HTTP requests associated
+        // with the form submit.  This is needed since the demo doesn't have
+        // a server to handle these requests.
+        (function() {
+            sinon.FakeXMLHttpRequest.useFilters = true;
+            sinon.FakeXMLHttpRequest.addFilter(function (method, url) {
+                return !(/test/).test(url);
+            });
+            var server = sinon.fakeServer.create();
+            server.respondWith([200, {}, '']);
+            server.autoRespond = true;
+            server.autoRespondAfter = 5000;
+        }());
+    </script>
+
+</html>

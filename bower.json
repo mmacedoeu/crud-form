@@ -1,0 +1,15 @@
+{
+  "name": "crud-form",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#latest",
+    "paper-elements": "Polymer/paper-elements#latest",
+    "core-ajax": "Polymer/core-ajax#latest",
+    "core-image": "Polymer/core-image#latest",
+    "core-scroll-threshold": "Polymer/core-scroll-threshold#latest",
+    "core-media-query": "Polymer/core-media-query#latest",
+    "core-animated-pages": "Polymer/core-animated-pages#latest",
+    "core-list": "Polymer/core-list#latest",
+    "ajax-form":"garstasio/ajax-form#master"
+  }
+}

@@ -1,0 +1,127 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link href="../paper-input/paper-input.html" rel="import">
+<link href="../core-collapse/core-collapse.html" rel="import">
+<link href="../core-menu/core-menu.html" rel="import">
+<link href="../paper-dropdown/paper-dropdown.html" rel="import">
+<link href="../paper-item/paper-item.html" rel="import">
+<link href="../paper-dropdown-menu/paper-dropdown-menu.html" rel="import">
+<link href="../core-toolbar/core-toolbar.html" rel="import">
+<link href="../paper-fab/paper-fab.html" rel="import">
+<link href="../font-roboto/roboto.html" rel="import" >
+<link href="../ajax-form/ajax-form.html" rel="import" >
+<link href="../paper-button/paper-button.html" rel="import">
+
+<!--
+##### Example
+
+    <crud-form></crud-form>
+
+@element crud-form
+@blurb Element providing solution to [...].
+@status [...]
+@homepage https://.../crud-form
+-->
+
+<polymer-element name="crud-form" attributes="fields wide debug">
+  <template>
+    <link rel="stylesheet" href="crud-form.css">
+
+    <template if={{debug}}>
+    <span>Responsive design wide form:  {{wide ? 'Verdadeiro' : 'Falso'}} !</span>
+    <span>lovs: </span>
+    </template>
+    <template repeat="{{lov in fields.lovs}}">
+      <template if={{debug}}>
+      <span>ID: {{lov.id}}</span>
+      </template>
+      <template repeat="{{kp in lov.keypairs}}">
+        <template if={{debug}}>
+          <span>keypair: {{kp[0]}} - {{kp[1]}}</span>
+        </template>
+      </template>
+    </template>
+  <div id="searchPanel" class="search-panel {{ {wide: wide} | tokenList }}" flex vertical layout?="{{!wide}}">
+    <div class="card" flex?="{{!wide}}" vertical layout?="{{!wide}}">
+      <core-toolbar>
+        <span flex>{{fields.title}}</span>
+        <template if={{!fields.readonly}}>
+          <paper-button raised>Limpar</paper-button>
+          <paper-fab icon="add" class="yellow"></paper-fab>
+        </template>
+      </core-toolbar>
+      <form id={{fields.formid}} is="ajax-form" action="{{fields.action}}" method="post" class="search-content" flex>
+
+      <!-- div id="searchContent" class="search-content" flex -->
+
+      <template repeat="{{field in fields.values}}">
+        <section horizontal?={{debug}} layout?={{debug}}>
+          <template if={{debug}}>
+          <span>{{field.label}}:</span>
+          </template>
+          <paper-input-decorator id="{{field.id}}" label="{{field.label}}" floatingLabel>
+            <input is="core-input" maxlength="{{field.length}}" id="{{field.id}}"
+              type="{{field.type}}" min="0" title="{{field.title}}" pattern="{{field.mask}}"/>
+          </paper-input-decorator>
+        </section>
+      </template>
+      </form>
+    </div>
+  </div>
+
+    <content></content>
+  </template>
+
+  <script>
+    PolymerExpressions.prototype.property = function (input, property, value) {
+      return input.filter(function(item){
+         return item[property] === value;
+      });
+    };
+
+
+    Polymer('crud-form', {
+      wide: true,
+      debug: false,
+      fields: null,
+
+      invalid: function() {
+        console.log('invalid form');
+      },
+      submitting: function(event) {
+        console.log('submitting form');
+      },
+      submitted: function(event) {
+        console.log('submitted form');
+      },
+      created: function() {
+        console.log("created");
+      },
+      attached: function () {
+        console.log("attached");
+      },
+      domReady: function() {
+        console.log("domReady");
+      },
+      detached: function() {
+        console.log("detached");
+      },
+      attributeChanged: function(attrName, oldVal, newVal) {
+        //var newVal = this.getAttribute(attrName);
+        console.log(attrName, 'old: ' + oldVal, 'new:', newVal);
+      },
+
+      ready: function() {
+        console.log("ready");
+        var form = this.shadowRoot.querySelector('form');
+                console.log(form);
+        var events = [ 'invalid', 'submitting', 'submitted'];
+        for (var event in events) {
+          form.addEventListener(event, this[event]);
+        }
+        console.log(this.getAttribute('fields'));
+        console.log(this.fields);
+      }
+    });
+  </script>
+</polymer-element>
